@@ -1,12 +1,12 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+// import LoadingSpinner from "./LoadingSpinner";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import './Home.css'
 
 const Playlist = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const [trackList, setTrackList] = useState(location.state.tracks)
+    const [trackList, _] = useState(location.state.tracks)
     const [currentTrack, setCurrentTrack] = useState(Object.values(location.state.tracks)[0][0].split(':')[2])
     // const [isLoading, setLoading] = useState(true)
     // window.onSpotifyIframeApiReady = (IFrameAPI) => {
@@ -52,10 +52,10 @@ const Playlist = () => {
             let trackArtist = trackList[prop][1]
             let trackUri = trackList[prop][0]
 
-            rows.push(<li>
-                <a onClick={() => changeTrack(trackUri)} ><span class="number">{count}</span></a>
+            rows.push(<li key={count}>
+                <a onClick={() => changeTrack(trackUri)} ><span className="number">{count}</span></a>
                 <div id={trackName} className="trackRow">
-                    <h2 class="track-title"> {trackName} </h2>
+                    <h2 className="track-title"> {trackName} </h2>
                     <p>{trackArtist}</p>
                 </div>
             </li>)
@@ -82,8 +82,8 @@ const Playlist = () => {
                 {/* <div id="embed-iframe"></div> */}
                 {/* <button className="submit-button">Add to Playlist</button> */}
             </div>
-            <div class="embed-iframe">
-                <iframe src={`https://open.spotify.com/embed/track/${currentTrack}`} width="400" height="900" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            <div className="embed-iframe">
+                <iframe src={`https://open.spotify.com/embed/track/${currentTrack}`} width="400" height="900" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 {/* <div class="button-container">
                     <button className="submit-button">Add to Playlist</button>
                 </div> */}
