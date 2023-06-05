@@ -18,6 +18,28 @@
   margin: 0 auto;
 }
 
+.dropdown{
+  position: fixed;
+  top:60px;
+  right:0;
+}
+
+.drop-button{
+  width: 100px;
+  height: 50px;
+  background-color: #1DB95495;
+
+  color: #FFFFFF;
+  border: 4px rgb(1, 61, 1);
+  /* font-size: 20px; Changed from 24px */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.drop-button:hover{ 
+  background-color: #000000;
+}
 .nav-bar {
   position: fixed;
   top: 0;
@@ -41,14 +63,17 @@
 
 .nav-item.left {
   color: #FFFFFF;
+  width: 200px !important;
 }
 
 .nav-item.center {
   color: #FFFFFF;
+  margin: auto;
 }
 
 .nav-item.right {
   color: #FFFFFF;
+  width: 200px !important;
 }
 
 .input-container {
@@ -361,5 +386,43 @@ a:hover{
 }
 
 
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Opaque grey background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
+.loading-overlay.show {
+  z-index: 0; /* Ensures the spinner is on top of other elements */
+  opacity: 1;
+}
+
+.loading-overlay.hide {
+  opacity: 0;
+  z-index: 0;
+}
+
+.title-text {
+  font-size: 4em;
+  font-weight: bold;
+  padding: 10px; 
+  /* background-color: white; */
+  /* display: block; */
+  /* flex-wrap: wrap; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* width: 80%; */
+  /* text-align: center; */
+  /* white-space: nowrap; */
+  /* overflow-wrap: break-word; */
+  /* text-overflow: ellipsis; */
+}
 
