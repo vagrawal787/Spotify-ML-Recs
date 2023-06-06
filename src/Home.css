@@ -414,6 +414,8 @@ a:hover{
   font-size: 4em;
   font-weight: bold;
   padding: 10px; 
+  /* flex-wrap: wrap; */
+  text-align: center;
   /* background-color: white; */
   /* display: block; */
   /* flex-wrap: wrap; */
