@@ -4,6 +4,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from 'axios';
+import MessagePopup from './MessagePopup';
 
 axios.defaults.withCredentials = true
 
@@ -25,12 +26,21 @@ function Home() {
     const [loggingIn, setLogging] = useState(false)
     const [showOverlay, setShowOverlay] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [message, setMessage] = useState("TESTING MFER")
+    const [showMessage, setShowMessage] = useState(false)
 
     const navigate = useNavigate();
 
     //The recommend function of the app. Sends request to API to recommend songs.
     const handleGeneratePlaylist = () => {
+        if (userName == "" || userName == null) {
+            setMessage("Please login before generating")
+            setShowMessage(true)
+            return
+        }
         if (prompt.length == 0){
+            setMessage("Please enter a prompt")
+            setShowMessage(true)
             return
         }
         setLoading(true)
@@ -42,6 +52,8 @@ function Home() {
             navigate("/playlist", { state: { tracks: res["data"] } });
         }).catch(e => {
             setLoading(false)
+            setMessage("Couldn't generate tracklist, please try again later!")
+            setShowMessage(true)
         })
     };
 
@@ -55,6 +67,9 @@ function Home() {
             window.location.href = res["data"]
         }).catch(e => {
             console.log(e)
+            setLoading(false)
+            setMessage("Failed to login, please try again later!")
+            setShowMessage(true)
         })
     }
 
@@ -71,19 +86,45 @@ function Home() {
         setUsername("")
     }
 
+    const showAbout = () => {
+        setMessage("About page is in development. Check back later!")
+        setShowMessage(true)
+    }
+
+    const handleButton = () => {
+        console.log(showMessage)
+        setMessage("Hola")
+        setShowMessage(true)
+        console.log(showMessage)
+        console.log(message)
+        // const timer = setTimeout(() => {
+        //     setShowMessage(false);
+        //     console.log(showMessage)
+        // }, 3000);
+        // return () => {
+        //     clearTimeout(timer);
+        // };
+    }
+
     //Two functions:
     // 1) If we are being redirected from the server, we get the username from query params and login
     // 2) If we are already logged in and just refreshing the page, get the user from sessionStore
     useEffect(() => {
         if (searchParam.get('username')) {
+            console.log("getting search param")
             let username = searchParam.get('username')
             setUsername(username)
             window.sessionStorage.setItem("loggedIn", "true")
             window.sessionStorage.setItem("sessionUser", username)
             setLoading(false)
+            setMessage("Logged In!")
+            setShowMessage(true)
             navigate('/')
         } else if (window.sessionStorage.getItem("loggedIn") == "true" && !loggingIn) {
+            console.log("getting session storage")
             let username = window.sessionStorage.getItem("sessionUser")
+            setMessage("Logged In!")
+            setShowMessage(true)
             setUsername(username)
         }
 
@@ -104,6 +145,16 @@ function Home() {
         return () => clearTimeout(timeoutId);
     }, [loading])
 
+    useEffect(() => {
+        let timeoutId
+        if(showMessage){
+            timeoutId = setTimeout(() => {
+                setShowMessage(false);
+            }, 3000); // Adjust the delay as needed
+        }
+        return () => clearTimeout(timeoutId);
+    }, [showMessage])
+
 
 
 
@@ -111,7 +162,7 @@ function Home() {
     return (
         <div className="App">
             <nav className="nav-bar">
-                <button className="nav-item left rounded-button">about</button>
+                <button className="nav-item left rounded-button" onClick={showAbout}>about</button>
                 <div className="nav-item center">Spotify Mood</div>
                 {userName && <button onClick={() => setIsOpen(!isOpen)} className="nav-item right rounded-button">{userName}</button>}
                 {(userName == '' || userName == null) && <button className="nav-item right rounded-button" onClick={handleLogin}>login</button>}
@@ -123,14 +174,16 @@ function Home() {
                 )}
             <div>
                 <h1 className="title-text"> An AI-created playlist based on your mood  </h1>
+                {/* <button onClick={handleButton} /> */}
             </div>
             <div className="input-container">
                 <input type="text" placeholder="Enter your mood here" className="rounded-input" onChange={e => setPrompt(e.target.value)} />
-                <button className="submit-button rounded-button" onClick={handleGeneratePlaylist} disabled={userName == null || userName == ""}>generate playlist</button>
+                <button className="submit-button rounded-button" onClick={handleGeneratePlaylist} >generate playlist</button>
             </div>
             {loading && (<div className={`loading-overlay ${showOverlay ? 'show' : 'hide'}`}>
                 <LoadingSpinner />
             </div>)}
+            <MessagePopup message={message} show={showMessage} />
         </div>
     );
 
