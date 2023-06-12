@@ -70,7 +70,7 @@ const Playlist = () => {
                 <Link className="navbar-brand" to="/">
                     <button className="navbar-button">About</button>
                 </Link>
-                <h1 className="navbar-title">Spotify Mood</h1>
+                <h1 className="navbar-title">Mood2Music</h1>
                 <Link className="navbar-brand" to="/">
                     <button className="navbar-button" onClick={handleBack}>Back</button>
                 </Link>

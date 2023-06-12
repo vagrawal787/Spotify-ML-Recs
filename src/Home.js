@@ -126,6 +126,11 @@ function Home() {
             setMessage("Logged In!")
             setShowMessage(true)
             setUsername(username)
+        } else if (searchParam.get('error')) {
+            setLoading(false)
+            setMessage("Could not log you in. Please try again later.")
+            setShowMessage(true)
+            navigate('/')
         }
 
     }, [])
