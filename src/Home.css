@@ -269,10 +269,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
   position: fixed;
-  top: 30%;
-  right: 0;
+  top: 85%;
+  right: 30%;
   /* transform: translateY(-50%); */
   transform: translate(50%, -50%);
   animation: fade-in 1s ease-in-out forwards;
