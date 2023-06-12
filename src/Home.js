@@ -163,7 +163,7 @@ function Home() {
         <div className="App">
             <nav className="nav-bar">
                 <button className="nav-item left rounded-button" onClick={showAbout}>about</button>
-                <div className="nav-item center">Spotify Mood</div>
+                <div className="nav-item center">Mood2Music</div>
                 {userName && <button onClick={() => setIsOpen(!isOpen)} className="nav-item right rounded-button">{userName}</button>}
                 {(userName == '' || userName == null) && <button className="nav-item right rounded-button" onClick={handleLogin}>login</button>}
             </nav>
